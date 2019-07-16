@@ -1,8 +1,14 @@
 import React, { Component } from "react";
+import storeContext from "./context";
 
 class App extends Component {
   render() {
-    return <div>React App</div>;
+    const store = {};
+    return (
+      <storeContext.Provider value={store}>
+        <div>React App</div>
+      </storeContext.Provider>
+    );
   }
 }
 
