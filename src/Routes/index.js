@@ -5,6 +5,7 @@ import AuthenticatedRoute from "Components/Auth/AuthenticatedRoute";
 
 // lazy loaded routes
 const Login = React.lazy(() => import("Containers/Login/Login"));
+const Home = React.lazy(() => import("Containers/Home/Home"));
 
 export default ({ isAuthenticated }) => {
   return (
@@ -24,7 +25,7 @@ export default ({ isAuthenticated }) => {
         isAuthenticated={isAuthenticated}
         path="/"
         exact
-        component={props => <div />}
+        component={() => <Home />}
       />
     </Switch>
   );
