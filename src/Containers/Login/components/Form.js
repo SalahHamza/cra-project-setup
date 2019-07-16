@@ -4,6 +4,8 @@ import { Form as FormikForm, withFormik } from "formik";
 import { Form } from "react-bootstrap";
 import { makeStyles } from "@material-ui/styles";
 import LoadingButton from "Components/UI/LoadingButton/LoadingButton";
+import { login } from "mocks/index";
+import { authStorage } from "Utils";
 
 const useStyles = makeStyles({
   root: {},
@@ -86,10 +88,16 @@ export default withFormik({
         .required("Required"),
       password: Yup.string().required("Required")
     }),
-  handleSubmit: (values, { setSubmitting }) => {
-    // Simulating network request
-    setTimeout(() => {
-      setSubmitting(false);
-    }, 2000);
+  handleSubmit: async (values, { setSubmitting, props: { authSuccess } }) => {
+    try {
+      const { access_token, expires_in } = await login(values);
+
+      // persisting auth data
+      authStorage.persist(access_token, expires_in);
+      authSuccess(access_token);
+    } catch (err) {
+      console.error(err);
+    }
+    setSubmitting(false);
   }
 })(LoginForm);

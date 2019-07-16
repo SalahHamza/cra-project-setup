@@ -1,6 +1,7 @@
 import React from "react";
 import LoginForm from "./components/Form";
 import { makeStyles } from "@material-ui/styles";
+import storeContext from "context";
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -14,10 +15,11 @@ const useStyles = makeStyles(theme => ({
 
 const Login = props => {
   const classes = useStyles();
+  const { onUserAuthentication } = React.useContext(storeContext);
   return (
     <div className={classes.root}>
       <div className={classes.formContainer}>
-        <LoginForm />
+        <LoginForm authSuccess={onUserAuthentication} />
       </div>
     </div>
   );
